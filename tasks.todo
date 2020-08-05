@@ -1,0 +1,22 @@
+StoredIn:
+    Backend:
+        Setup:
+            ✔ Initialize NodeJS LTS (latest v12.18.3) project. @done(20-08-05 11:47)
+                ✔ Install required packages @done(20-08-05 11:47)
+                    ✔ Express @done(20-08-05 11:44)
+                    ✔ Body-parser @done(20-08-05 11:44)
+                    ✔ UUID @done(20-08-05 11:44)
+                    ✘ Promises? (or use async-await) @cancelled(20-08-05 11:47)
+        Functionality:
+            REST API:
+                ☐ Routes:
+                    ☐ Receive POST request (PUT), receive, label, and store the data securely. @high 
+                        ✔ Check if the content (data) is provided & meets the minimum requirement for storage. @done(20-08-05 14:35)
+                        ✔ Generate paste id, delete key, timestamp, and gather user's ip for security. @low @done(20-08-05 15:08)
+                        ✔ Format the links for ease of use. @done(20-08-05 15:13)
+                        ☐ 
+                    ✔ GET request, fetch, parse, and return the stored data. @done(20-08-05 17:16)
+                        ✔ Check and verify the existance of the file before moving forward with the request. @done(20-08-05 17:16)
+                        ✔ Return formatted data. @done(20-08-05 17:16)
+                    ✔ DELETE request, find and remove the data from the storage. @low @done(20-08-05 17:16)
+                    ☐ Respond with appropriate status codes. @critical 

@@ -1,0 +1,45 @@
+{
+    "name": "storedin",
+    "version": "1.0.0",
+    "description": "Pastebin like application's backend developed in NodeJS that utilizes local or remote storage and fetching.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/intern0t/storedin.git"
+    },
+    "keywords": [
+        "Pastebin",
+        "paste",
+        "pastebin",
+        "remote",
+        "storage",
+        "files",
+        "file",
+        "cache",
+        "backend",
+        "local",
+        "script"
+    ],
+    "author": "Prashant Shrestha (intern0t)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/intern0t/storedin/issues"
+    },
+    "homepage": "https://github.com/intern0t/storedin#readme",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "dayjs": "^1.8.32",
+        "express": "^4.17.1",
+        "express-promise-router": "^4.0.1",
+        "mkdirp": "^1.0.4",
+        "shortid": "^2.2.15",
+        "uuid": "^8.3.0"
+    },
+    "devDependencies": {
+        "morgan": "^1.10.0"
+    }
+}
