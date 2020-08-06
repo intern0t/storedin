@@ -143,8 +143,13 @@ var getRequestMiddelware = async (req, res, next) => {
     }
 };
 
-pasteRouter.get('/', (req, res) => {
-    res.sendFile(await`/views/index.txt`, { root: __basedir });
+pasteRouter.get('/', async (req, res) => {
+    res.set({
+        'Content-Type': 'text/plain',
+        'Content-Disposition': `inline; filename="index"`,
+        'Keep-Alive': 'timeout=5, max=1000',
+    });
+    res.sendFile(await `/views/index.todo`, { root: __basedir });
 });
 
 pasteRouter.get('/:id', getRequestMiddelware, async (req, res) => {
@@ -235,7 +240,10 @@ pasteRouter.get('/:id/:deleteKey', async (req, res) => {
                         ) {
                             await fs.unlink(pasteFilePath, (err) => {
                                 if (err) throw err;
-                                console.log('path/file.txt was deleted');
+                                res.json({
+                                    error: false,
+                                    message: `Paste with id (${formattedData.id}) has been deleted!`,
+                                });
                             });
                         }
                     });

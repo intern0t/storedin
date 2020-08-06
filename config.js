@@ -10,6 +10,6 @@ module.exports = {
     DOMAIN:
         this.DEV !== true ? 'http://localhost:9999/' : 'https://storedin.me/',
     OUTPUT: {
-        data: true,
+        data: false,
     },
 };
