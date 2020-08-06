@@ -20,16 +20,14 @@ if (DEV) {
     app.use(morgan('dev'));
 }
 
-/**
- * Importing and using routes.
- */
+// Importing and using express routes.
 const createPasteRoute = require('./routes/route.paste');
 
 // Main page, instructions and such!
 app.use('/', createPasteRoute);
 
 // Start server.
-app.listen(PORT, (req, res) => {
+app.listen(PORT, () => {
     console.log(
         `Listening on Port: *:${PORT}${
             DEV && DEV === true ? ' in development mode.' : ''

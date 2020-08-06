@@ -31,6 +31,7 @@
     "homepage": "https://github.com/intern0t/storedin#readme",
     "dependencies": {
         "body-parser": "^1.19.0",
+        "compression": "^1.7.4",
         "cors": "^2.8.5",
         "dayjs": "^1.8.32",
         "express": "^4.17.1",

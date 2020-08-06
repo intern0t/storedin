@@ -14,7 +14,8 @@ StoredIn:
                         ✔ Check if the content (data) is provided & meets the minimum requirement for storage. @done(20-08-05 14:35)
                         ✔ Generate paste id, delete key, timestamp, and gather user's ip for security. @low @done(20-08-05 15:08)
                         ✔ Format the links for ease of use. @done(20-08-05 15:13)
-                        ☐ 
+                        ☐ Allow file input using 'curl'. @high 
+                        ✔ Limit allowed content size < ~3Mb. @critical @done(20-08-05 23:08)
                     ✔ GET request, fetch, parse, and return the stored data. @done(20-08-05 17:16)
                         ✔ Check and verify the existance of the file before moving forward with the request. @done(20-08-05 17:16)
                         ✔ Return formatted data. @done(20-08-05 17:16)
