@@ -4,7 +4,7 @@
     "description": "Pastebin like application's backend developed in NodeJS that utilizes local or remote storage and fetching.",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest"
     },
     "repository": {
         "type": "git",
@@ -41,6 +41,14 @@
         "uuid": "^8.3.0"
     },
     "devDependencies": {
-        "morgan": "^1.10.0"
+        "jest": "^26.2.2",
+        "morgan": "^1.10.0",
+        "supertest": "^4.0.2"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "coveragePathIgnorePatterns": [
+            "/node_modules/"
+        ]
     }
 }

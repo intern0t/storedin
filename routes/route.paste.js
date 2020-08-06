@@ -39,9 +39,9 @@ pasteRouter.get('/favicon.ico', function (req, res) {
     res.statusCode = 200;
     // res.setHeader('Content-Length', favicon.length);
     res.setHeader('Content-Type', 'image/x-icon');
-    res.setHeader('Cache-Control', 'public, max-age=2592000'); // expiers after a month
+    res.setHeader('Cache-Control', 'public, max-age=2592000');
     res.setHeader('Expires', new Date(Date.now() + 2592000000).toUTCString());
-    res.sendFile(__basedir + "/views/favicon.ico")
+    res.sendFile(__basedir + '/views/favicon.ico');
 });
 
 /**
@@ -149,6 +149,13 @@ pasteRouter.post('*', postRequestMiddleware, async (req, res) => {
                     'Server ran into an error when trying to create a paste with your data.',
             });
         }
+    } else {
+        // 400 Bad Request
+        res.status(400).json({
+            error: true,
+            message:
+                'Missing the required content, please provide the content in data parameter.',
+        });
     }
 });
 
@@ -173,7 +180,9 @@ pasteRouter.get('/', async (req, res) => {
         'Content-Type': 'text/plain',
         'Content-Disposition': `inline; filename="index"`,
         'Keep-Alive': 'timeout=5, max=1000',
+        'Cache-Control': 'public, max-age=3600',
     });
+    res.setHeader('Cache-Control', 'public, max-age=3600');
     res.status(200).sendFile(await `/views/index.todo`, { root: __basedir });
 });
 
@@ -204,7 +213,12 @@ pasteRouter.get('/:id', getRequestMiddelware, async (req, res) => {
                                 'Content-Type': 'text/plain',
                                 'Content-Disposition': `inline; filename="${formattedData.id}.txt"`,
                                 'Keep-Alive': 'timeout=5, max=1000',
+                                'Cache-Control': 'public, max-age=2592000',
                             });
+                            res.setHeader(
+                                'Cache-Control',
+                                'public, max-age=2592000'
+                            );
                             res.type('txt');
                             res.status(200).send(
                                 `${formattedData.data}${
@@ -268,12 +282,34 @@ pasteRouter.get('/:id/:deleteKey', async (req, res) => {
                             formattedData.id === req.params.id &&
                             formattedData.deleteKey === req.params.deleteKey
                         ) {
-                            fs.unlink(pasteFilePath, (err) => {
-                                if (err) throw err;
-                                res.status(200).json({
-                                    error: false,
-                                    message: `Paste with id (${formattedData.id}) has been deleted!`,
-                                });
+                            // Delete the paste file first.
+                            await fs.unlink(pasteFilePath, async (err) => {
+                                if (err) {
+                                    res.status(500).json({
+                                        error: true,
+                                        message: `Server encountered a problem when trying to delete the paste file with id ${formattedData.id}.`,
+                                    });
+                                    throw err;
+                                }
+
+                                // Try and delete the directory
+                                await fs.rmdir(
+                                    path.dirname(pasteFilePath),
+                                    (err) => {
+                                        if (err) {
+                                            if (err.code === 'ENOTEMPTY') {
+                                                console.log(
+                                                    `Paste with id ${formattedData.id} has been deleted!`
+                                                );
+                                            }
+                                        }
+
+                                        res.status(200).json({
+                                            error: false,
+                                            message: `Paste with id (${formattedData.id}) has been deleted!`,
+                                        });
+                                    }
+                                );
                             });
                         } else {
                             // 401 Unauthorized
