@@ -1,0 +1,81 @@
+                                                                                 
+                                                                                 
+  .--.--.       ___                                            ,---,             
+ /  /    '.   ,--.'|_                                  ,---,,`--.' |             
+|  :  /`. /   |  | :,'   ,---.    __  ,-.            ,---.'||   :  :      ,---,  
+;  |  |--`    :  : ' :  '   ,'\ ,' ,'/ /|            |   | ::   |  '  ,-+-. /  | 
+|  :  ;_    .;__,'  /  /   /   |'  | |' | ,---.      |   | ||   :  | ,--.'|'   | 
+ \  \    `. |  |   |  .   ; ,. :|  |   ,'/     \   ,--.__| |'   '  ;|   |  ,"' | 
+  `----.   \:__,'| :  '   | |: :'  :  / /    /  | /   ,'   ||   |  ||   | /  | | 
+  __ \  \  |  '  : |__'   | .; :|  | ' .    ' / |.   '  /  |'   :  ;|   | |  | | 
+ /  /`--'  /  |  | '.'|   :    |;  : | '   ;   /|'   ; |:  ||   |  '|   | |  |/  
+'--'.     /   ;  :    ;\   \  / |  , ; '   |  / ||   | '/  ''   :  ||   | |--'   
+  `--'---'    |  ,   /  `----'   ---'  |   :    ||   :    :|;   |.' |   |/       
+               ---`-'                   \   \  /  \   \  /  '---'   '---'        
+                                         `----'    `----'                        
+                                                                                 
+                                        (2020-*)
+
+StoredIn is a simple pastebin alternative to store raw text data. StoredIn is developed using
+ NodeJS for the backend to handle all the requests and stores the content locally for now but 
+ have plans to move to 3rd party storage services depending on my financial situation in the 
+ coming future.
+
+[Purpose]:
+    There is no special reason, this is developed simply to fulfill my needs and for the peace 
+    of mind, and learn something new in the process.
+
+[Usage]:
+    1. Using 'curl'.
+        $   curl --data "data=$(cat somefile.ext)" https://storedin.me
+        $   cat somefile.ext | curl --data-urlencode data@- https://storedin.me
+
+[Features]:
+    ✔ Accepts POST requests with 'data' as the field. (works with any systems without having to 
+        install any special tools).
+    ✔ Stored as file (no database used), hence the speed. Have TBs of SSD storage, for now. 
+    ✔ No public/private/secret links, share wherever you want.
+    ✔ Fairly short and catchy url.
+
+[Retention]:
+    Data retention wise, I'll wipe all the paste depending on how much disk size it takes in 
+    total, I'll wipe ALL the paste files if I need more storage or make spots for my paste if full.
+    Please do not expect the paste you store to have infinite retention. For now, I'm allocating 
+    around 100Gb = ~((1024 * 100)Mb/~3Mb limit/paste) = ~34133.333 paste files.
+
+[Restriction(s)]:
+    This little pet project does not come without restrictions besides its retention. Some rules
+    must be followed (which is subjective to changes).
+        ✘ No illegal contents.
+        ✘ File upload is NOT allowed. Raw contents however, is allowed.
+        ✘ Maximum of 2Mb POST request allowed (content size < 2Mb).
+        ✔ All DMCA or illegal contents (if found or reported) will be answered for and deleted, 
+            without owner's permission or notification.
+        ✔ I (admin) have the right to delete the contents and shutdown this service whenever 
+            I want.
+
+[Plans]:
+    ☐ [Storage] Move to 3rd party storage services. @critical 
+        Couple options:
+            1. AWS (Expensive as hell!)
+            2. Wasabi (~$5/TB) [current choice!]
+    ☐ [Security] Server-side encryption or client side encryption feature. @low
+
+[Changelog]:
+    Wed 05 Aug 2020:
+        ✔ Wed 05 Aug 2020 18:37:35 PM EDT - Purchase domain. @done(20-08-05 21:38)
+        ✔ Wed 05 Aug 2020 08:50:57 AM EDT - Start development! @done(20-08-05 21:59)
+
+[Thanks]:
+    ✔ NodeJS, for being awesome, as always. @done(20-08-05 21:01)
+        ✔ body-parser @done(20-08-05 21:01)
+        ✔ cors @done(20-08-05 21:01)
+        ✔ dayjs @done(20-08-05 21:01)
+        ✔ express @done(20-08-05 21:01)
+        ✔ express-promise-router @done(20-08-05 21:01)
+        ✔ shortid @done(20-08-05 21:01)
+        ✔ uuid @done(20-08-05 21:01)
+        ✔ morgan. @done(20-08-05 21:01)
+        ✔ supertest @done(20-08-06 14:55)
+        ✔ jest @done(20-08-06 14:55)
+    ✔ My friend for sharing his server space to host this application. @done(20-08-05 21:03)
