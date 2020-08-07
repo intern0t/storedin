@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoredIn</title>
+    <meta name="description" content="Pastebin alternative that can store, remove, and fetch raw text data that is easy to use.">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <pre>
+
+
+
+
+
+            
+        .--.--.       ___                                            ,---,             
+        /  /    '.   ,--.'|_                                  ,---,,`--.' |             
+        |  :  /`. /   |  | :,'   ,---.    __  ,-.            ,---.'||   :  :      ,---,  
+        ;  |  |--`    :  : ' :  '   ,'\ ,' ,'/ /|            |   | ::   |  '  ,-+-. /  | 
+        |  :  ;_    .;__,'  /  /   /   |'  | |' | ,---.      |   | ||   :  | ,--.'|'   | 
+         \  \    `. |  |   |  .   ; ,. :|  |   ,'/     \   ,--.__| |'   '  ;|   |  ,"' | 
+          `----.   \:__,'| :  '   | |: :'  :  / /    /  | /   ,'   ||   |  ||   | /  | | 
+          __ \  \  |  '  : |__'   | .; :|  | ' .    ' / |.   '  /  |'   :  ;|   | |  | | 
+         /  /`--'  /  |  | '.'|   :    |;  : | '   ;   /|'   ; |:  ||   |  '|   | |  |/  
+        '--'.     /   ;  :    ;\   \  / |  , ; '   |  / ||   | '/  ''   :  ||   | |--'   
+          `--'---'    |  ,   /  `----'   ---'  |   :    ||   :    :|;   |.' |   |/       
+                       ---`-'                   \   \  /  \   \  /  '---'   '---'        
+                                                 `----'    `----'                        
+                                                                                        
+        (2020-*)
+        
+        StoredIn is a simple pastebin alternative to store raw text data. StoredIn is developed using
+        NodeJS for the backend to handle all the requests and stores the content locally for now but 
+        have plans to move to 3rd party storage services depending on my financial situation in the 
+        coming future.
+        
+        [Purpose]:
+            There is no special reason, this is developed simply to fulfill my needs and for my peace 
+            of mind, and learn something new in the process.
+        
+        [Usage]:
+            1. Using 'curl'.
+                $   curl --data "data=$(cat somefile.ext)" https://storedin.me
+                $   cat somefile.ext | curl --data-urlencode data@- https://storedin.me
+            
+            ~ Add it as an alias in your '~/.bash_aliases' file.
+                $   echo 'alias sim="curl --data-urlencode data@- https://storedin.me"' >> ~/.bash_aliases
+            Use it -
+                $   cat somefile.ext | sim
+        
+        [Features]:
+            ✔ Accepts POST requests with 'data' as the field. (works with any systems without having to 
+                install any special tools).
+            ✔ Stored as file (no database used), hence the speed. Have TBs of SSD storage but 50 GB quota
+                set, for now.
+            ✔ No public/private/secret links, share wherever you want.
+            ✔ No complex system resulting in decent performance for all tasks.
+            ✔ Fairly short and catchy url.
+        
+        [Retention]:
+            Data retention wise, I'll wipe all the paste depending on how much disk size it takes in 
+            total, I'll wipe ALL the paste files if I need more storage or make spots for my paste if full.
+            Please do not expect the paste you store to have infinite retention. For now, I'm allocating 
+            around 50Gb = ~((1024 * 50)Mb/~2Mb limit/paste) = ~25600 paste files.
+        
+        [Restriction(s)]:
+            This little pet project does not come without restrictions besides its retention. Some rules
+            must be followed (which is subjective to changes).
+                + No illegal contents.
+                + File upload is NOT allowed. Raw contents however, is allowed.
+                + Maximum of 2Mb POST request allowed (content size <= 2Mb).
+                + All DMCA or illegal contents (if found or reported) will be answered for and deleted, 
+                    without owner's permission or notification.
+                + StoredIn is not a service, I (administrator) cannot be held liable for misuse. If found, 
+                    feel free to get in contact with me.
+        
+        [Plans]:
+            ☐ [Storage] Move to 3rd party storage services. @high 
+                Couple options:
+                    1. AWS (Expensive as hell!)
+                    2. Wasabi (~$5/TB) [current choice!]
+            ☐ [Security] Server-side encryption or client side encryption feature. @low
+        
+        [Changelog]:
+            Fri 07 Aug 2020:
+                ✔ Deployed in a shared server. Disk quota set to 50 GB for now.
+            Wed 05 Aug 2020:
+                ✔ Purchased domain.
+                ✔ Started development!
+        
+        [Thanks]:
+            ✔ NodeJS, for being awesome, as always. @done(20-08-05 21:01)
+                ✔ body-parser @done(20-08-05 21:01)
+                ✔ cors @done(20-08-05 21:01)
+                ✔ dayjs @done(20-08-05 21:01)
+                ✔ express @done(20-08-05 21:01)
+                ✔ express-promise-router @done(20-08-05 21:01)
+                ✔ shortid @done(20-08-05 21:01)
+                ✔ uuid @done(20-08-05 21:01)
+                ✔ morgan. @done(20-08-05 21:01)
+                ✔ supertest @done(20-08-06 14:55)
+                ✔ jest @done(20-08-06 14:55)
+            ✔ My friend for sharing his server space to host this application. @done(20-08-05 21:03)
+        
+        [Contact]:
+            You can contact me in Github [intern0t], Twitter [InvalidxSyntax], and IRC@Freenode [Scarecr0w].
+            I do not want to publicize my email.
+
+
+
+
+
+
+    </pre>
+</body>
+
+</html>

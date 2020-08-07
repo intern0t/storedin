@@ -9,7 +9,8 @@
 
 const express = require('express');
 const app = express();
-const { DEV, PORT } = require('./config.js');
+const fs = require('fs');
+const { DEV, PORT, DIRECTORY } = require('./config.js');
 
 // Strictly for file & path management.
 global.__basedir = __dirname;
@@ -18,6 +19,11 @@ global.__basedir = __dirname;
 if (DEV) {
     const morgan = require('morgan');
     app.use(morgan('dev'));
+}
+
+// Setup the directory.. if it doesn't exist. Blocks the app but worth it for start.
+if (!fs.existsSync(`${__basedir}/${DIRECTORY.paste}`)) {
+    fs.mkdirSync(`${__basedir}/${DIRECTORY.paste}`);
 }
 
 // Importing and using express routes.

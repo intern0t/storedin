@@ -169,7 +169,7 @@ var getRequestMiddelware = async (req, res, next) => {
     if (req.params && req.params.id && shortid.isValid(req.params.id)) {
         next();
     } else {
-        res.status(200).sendFile(await `/views/index.todo`, {
+        res.status(200).sendFile(await `/views/index.html`, {
             root: __basedir,
         });
     }
@@ -177,13 +177,13 @@ var getRequestMiddelware = async (req, res, next) => {
 
 pasteRouter.get('/', async (req, res) => {
     res.set({
-        'Content-Type': 'text/plain',
+        // 'Content-Type': 'text/plain',
         'Content-Disposition': `inline; filename="index"`,
         'Keep-Alive': 'timeout=5, max=1000',
         'Cache-Control': 'public, max-age=3600',
     });
     res.setHeader('Cache-Control', 'public, max-age=3600');
-    res.status(200).sendFile(await `/views/index.todo`, { root: __basedir });
+    res.status(200).sendFile(await `/views/index.html`, { root: __basedir });
 });
 
 pasteRouter.get('/:id', getRequestMiddelware, async (req, res) => {

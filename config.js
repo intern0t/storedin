@@ -3,7 +3,7 @@ module.exports = {
     PORT: 9999,
     DATA: {
         min: 50,
-        maxPayloadSize: '3mb',
+        maxPayloadSize: '2mb',
     },
     DIRECTORY: {
         paste: 'paste',
