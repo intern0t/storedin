@@ -18,7 +18,7 @@ var relativeTime = require('dayjs/plugin/relativeTime');
 const { DATA, DIRECTORY, DOMAIN, OUTPUT } = require('../config');
 
 // Setting up daysjs
-dayjs.extend(relativeTime);
+OUTPUT.data ? dayjs.extend(relativeTime) : null;
 
 // In order to accept POST requests.
 pasteRouter.use(
@@ -154,7 +154,7 @@ pasteRouter.post('*', postRequestMiddleware, async (req, res) => {
         res.status(400).json({
             error: true,
             message:
-                'Missing the required content, please provide the content in data parameter.',
+                'Missing the required parameters, please provide the content in data parameter.',
         });
     }
 });
@@ -245,6 +245,11 @@ pasteRouter.get('/:id', getRequestMiddelware, async (req, res) => {
                 message: `Server ran into an error when trying to retrieve a paste with id (${req.params.id}).`,
             });
         }
+    } else {
+        res.status(400).json({
+            error: true,
+            message: 'Missing paste id.',
+        });
     }
 });
 
@@ -334,6 +339,11 @@ pasteRouter.get('/:id/:deleteKey', async (req, res) => {
                 message: `Server ran into an error when trying to delete a paste with id (${req.params.id}).`,
             });
         }
+    } else {
+        res.status(400).json({
+            error: true,
+            message: `We could not identify the paste id (${req.params.id}) and the delete key you provided. The paste is not deleted.`,
+        });
     }
 });
 
