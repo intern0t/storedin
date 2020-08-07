@@ -27,9 +27,7 @@ pasteRouter.use(
     })
 );
 pasteRouter.use(
-    bodyParser.urlencoded({
-        extended: false,
-    })
+    bodyParser.urlencoded({ limit: DATA.maxPayloadSize, extended: true })
 );
 
 // Compress every requests & responses.
