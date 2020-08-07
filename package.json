@@ -2,7 +2,7 @@
     "name": "storedin",
     "version": "1.0.0",
     "description": "Pastebin like application's backend developed in NodeJS that utilizes local or remote storage and fetching.",
-    "main": "index.js",
+    "main": "app.js",
     "scripts": {
         "test": "jest"
     },

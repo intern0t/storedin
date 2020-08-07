@@ -2,7 +2,7 @@
  * Copyright © StoredIn, 2020
  * Developer: Prashant Shrestha (www.prashant.me)
  * Date: Wed 05 Aug 2020 11:45:54 AM EDT
- * Document: index.js (Entry)
+ * Document: app.js (Entry)
  * Licensed: MIT (Open Source)
  * WEBSITE -- STOREDIN.me (Available)
  */
