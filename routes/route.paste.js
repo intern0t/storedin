@@ -44,9 +44,6 @@ pasteRouter.get('/favicon.ico', function (req, res) {
 
 /**
  * Middleware for the create paste route, check if the data provided matches the criteria and take the necessary steps after verification.
- * @param {*} req
- * @param {*} res
- * @param {*} next
  */
 var postRequestMiddleware = async (req, res, next) => {
     if (req.body && req.body.data && req.body.data.length >= DATA.min) {
@@ -159,9 +156,6 @@ pasteRouter.post('*', postRequestMiddleware, async (req, res) => {
 
 /**
  * Middelware for GET request (handles separately, depending on the input.)
- * @param {*} req
- * @param {*} res
- * @param {*} next
  */
 var getRequestMiddelware = async (req, res, next) => {
     if (req.params && req.params.id && shortid.isValid(req.params.id)) {
