@@ -4,7 +4,6 @@
  * Date: Wed 05 Aug 2020 11:45:54 AM EDT
  * Document: app.js (Entry)
  * Licensed: MIT (Open Source)
- * WEBSITE -- STOREDIN.me (Available)
  */
 
 const express = require('express');
