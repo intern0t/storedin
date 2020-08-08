@@ -1,6 +1,6 @@
 # StoredIn
 
-A pastebin backend developed in NodeJS. Initial plan is to keep it as simple and efficient as possible, barebone, no fancy UI have been planned yet. It is very easy to create a frontend for this application as the standard is set by the backend. Depending on the time I have, I'll think about developing a frontend.
+A minimal and barebone pastebin like application developed in NodeJS. Initial plan is to keep it as simple and efficient as possible, barebone, no fancy UI have been planned yet. It is very easy to create a frontend for this application as the standard is set by the backend. Depending on the time I have, I'll think about developing a frontend.
 
 ## Usage
 
