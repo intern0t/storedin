@@ -21,4 +21,9 @@ module.exports = {
     OUTPUT: {
         data: false,
     },
+    LIMIT: {
+        view: 150,
+        create: 50,
+        timeInMs: 900000
+    }
 };
