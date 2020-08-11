@@ -26,10 +26,10 @@ if (!fs.existsSync(`${__basedir}/${DIRECTORY.paste}`)) {
 }
 
 // Importing and using express routes.
-const createPasteRoute = require('./routes/route.paste');
+const singleRouter = require('./routes/route.paste');
 
 // Main page, instructions and such!
-app.use('/', createPasteRoute);
+app.use('/', singleRouter);
 
 // Start server.
 app.listen(PORT, () => {

@@ -51,6 +51,15 @@
                 $   echo 'alias sim="curl --data-urlencode data@- https://storedin.me"' >> ~/.bash_aliases
             Use it -
                 $   cat somefile.ext | sim
+            
+            Extend -
+                If you by any chance have 'jq' package, you can prettify the response from the server.
+                You can append '| jq' in the end of the alias.
+
+                $   curl --data "data=$(cat somefile.ext)" https://storedin.me | jq
+                $   cat somefile.ext | curl --data-urlencode data@- https://storedin.me | jq
+
+                This should auto prettify the response.
         
         [Features]:
             ✔ Accepts POST requests with 'data' as the field. (works with any systems without having to 
@@ -107,7 +116,7 @@
                 ✔ supertest
                 ✔ jest
                 ✔ express-rate-limit
-            ✔ My friend for sharing his server space to host this application. @done(20-08-05 21:03)
+            ✔ My friend for sharing his server space to host this application.
         
         [Contact]:
             You can contact me in Github [intern0t], Twitter [InvalidxSyntax], and IRC@Freenode [Scarecr0w].
@@ -115,7 +124,7 @@
         
         [Open Source]
             Feel free to request for features, report bugs, contribute, or simply fork and launch your own 
-            pastebin like service, I believe in decentralization is the best way to keep a project alive.
+            pastebin like service, I believe decentralization is the best way to keep a project alive.
             Github - https://github.com/intern0t/storedin
 
 
