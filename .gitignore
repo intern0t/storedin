@@ -5,3 +5,4 @@ paste/
 logs
 logs/
 .vscode/
+.sass-cache

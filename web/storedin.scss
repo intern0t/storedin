@@ -42,8 +42,15 @@ body {
         'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 
     .main-container {
-        width: 650px;
+        @include breakpoint(xs) {
+            width: 400px;
+        }
+
+        @include breakpoint(sm) {
+            width: 700px;
+        }
         margin: 0 auto;
+        margin-bottom: 100px;
         display: flex;
         flex-direction: column;
 
