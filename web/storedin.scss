@@ -5,6 +5,7 @@
  */
 
 $color_white: #ffffff;
+$color_code_background: rgba(#f1494973, 0.3);
 
 @mixin breakpoint($class) {
     @if $class == xs {
@@ -74,6 +75,28 @@ body {
             .description {
                 margin: 0 10px;
                 color: rgba(#000000, 0.4);
+                display: flex;
+                align-items: center;
+
+                .typewrite-wrapper {
+                    width: 84px;
+                    background-color: #00d99c3b;
+                    color: rgba(0, 0, 0, 0.8);
+                    padding: 3px 5px;
+                    display: inline-block;
+                    text-align: center;
+                    margin: 0 10px;
+
+                    .typewrite {
+                        width: 84px;
+                        height: 22px;
+                        display: flex;
+                        text-align: center;
+                        justify-content: center;
+                        align-content: center;
+                        align-items: center;
+                    }
+                }
             }
 
             .year {
@@ -119,7 +142,7 @@ body {
             }
 
             code {
-                background-color: rgba(#f1494973, 0.3);
+                background-color: $color_code_background;
                 padding: 3px 5px;
                 font-weight: bold;
             }

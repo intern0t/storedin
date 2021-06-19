@@ -5,15 +5,22 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>StoredIn | A simple pastebin.</title>
-        <!-- For NodeJS (1 page response) -->
         <!-- <link rel="stylesheet" href="storedin.min.css" /> -->
-        <style>*{margin:0;padding:0}body{background-color:#fff;font-size:16px;line-height:23px;font-family:ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace}body .main-container{margin:0 auto;margin-bottom:100px;display:flex;flex-direction:column}@media (max-width: 767px){body .main-container{width:400px}}@media (min-width: 768px){body .main-container{width:700px}}body .main-container .main-header{padding:20px 0;margin:30px 0;display:flex;justify-content:center;align-items:center;align-content:center;flex-wrap:wrap}body .main-container .main-header .logo{font-size:x-large;padding:0 10px;border-right:2px solid black}body .main-container .main-header .description{margin:0 10px;color:rgba(0,0,0,0.4)}body .main-container .main-header .year{width:100%;overflow:hidden;text-align:center;margin:15px 0}body .main-container .description{font-size:15px;margin-bottom:10px}body .main-container .description h1,body .main-container .description h2{font-weight:bold;margin:15px 0}body .main-container .description h1{font-size:20px}body .main-container .description h2{font-size:14px}body .main-container .description pre{background-color:#000000;overflow:auto;padding:10px 15px;margin:15px 0;border-radius:3px;white-space:pre-wrap}body .main-container .description pre code{color:#fff;font-weight:normal;font-size:14px;background-color:transparent}body .main-container .description code{background-color:rgba(241,73,73,0.3);padding:3px 5px;font-weight:bold}body .main-container .description ul{list-style-type:square}body .main-container .description ul li{margin:5px 0 5px 10px}</style>
+        <style>
+            *{margin:0;padding:0}body{background-color:#fff;font-size:16px;line-height:23px;font-family:ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace}body .main-container{margin:0 auto;margin-bottom:100px;display:flex;flex-direction:column}@media (max-width: 767px){body .main-container{width:400px}}@media (min-width: 768px){body .main-container{width:700px}}body .main-container .main-header{padding:20px 0;margin:30px 0;display:flex;justify-content:center;align-items:center;align-content:center;flex-wrap:wrap}body .main-container .main-header .logo{font-size:x-large;padding:0 10px;border-right:2px solid black}body .main-container .main-header .description{margin:0 10px;color:rgba(0,0,0,0.4);display:flex;align-items:center}body .main-container .main-header .description .typewrite-wrapper{width:84px;background-color:#00d99c3b;color:rgba(0,0,0,0.8);padding:3px 5px;display:inline-block;text-align:center;margin:0 10px}body .main-container .main-header .description .typewrite-wrapper .typewrite{width:84px;height:22px;display:flex;text-align:center;justify-content:center;align-content:center;align-items:center}body .main-container .main-header .year{width:100%;overflow:hidden;text-align:center;margin:15px 0}body .main-container .description{font-size:15px;margin-bottom:10px}body .main-container .description h1,body .main-container .description h2{font-weight:bold;margin:15px 0}body .main-container .description h1{font-size:20px}body .main-container .description h2{font-size:14px}body .main-container .description pre{background-color:#000000;overflow:auto;padding:10px 15px;margin:15px 0;border-radius:3px;white-space:pre-wrap}body .main-container .description pre code{color:#fff;font-weight:normal;font-size:14px;background-color:transparent}body .main-container .description code{background-color:rgba(241,73,73,0.3);padding:3px 5px;font-weight:bold}body .main-container .description ul{list-style-type:square}body .main-container .description ul li{margin:5px 0 5px 10px}
+/*# sourceMappingURL=storedin.min.css.map */</style>
     </head>
-    <body>
+    <body onload="typewrite()">
         <div class="main-container">
             <section class="main-header">
                 <div class="logo">StoredIn</div>
-                <div class="description">A simple pastebin.</div>
+                <div class="description">
+                    A
+                    <span class="typewrite-wrapper"
+                        ><span class="typewrite">simple</span></span
+                    >
+                    pastebin.
+                </div>
                 <span class="year">2020-*</span>
             </section>
             <section class="description">
@@ -53,8 +60,8 @@
                         tools).
                     </li>
                     <li>
-                        No complex system
-                        resulting in decent performance for all tasks. Stored as file (no database used).
+                        No complex system resulting in decent performance for
+                        all tasks. Stored as file (no database used).
                     </li>
                     <li>
                         Delete link is provided during the creation of the
@@ -116,6 +123,9 @@
                 <h1>Changelog</h1>
                 <ul>
                     <li>
+                        <strong>Sat 19 Jul 2021:</strong> Redesigned webpage.
+                    </li>
+                    <li>
                         <strong>Fri 04 Jun 2021:</strong> Changed default port,
                         now supports 2 different servers - load balanced. Home
                         server included. Allocated 100GB per server.
@@ -139,12 +149,58 @@
             <section class="description">
                 <h1>Contact Information</h1>
                 <ul>
-                    <li>
-                        Github [intern0t]
-                    </li>
+                    <li>Github [intern0t]</li>
                     <li>IRC@Libera [Scarecr0w]</li>
                 </ul>
             </section>
         </div>
+
+        <script>
+            var element_to_typewrite =
+                document.getElementsByClassName('typewrite')[0];
+            let typewrite_settings = {
+                timeout: 400,
+                word_index: 0,
+                letter_index: 0,
+                words: ['simple', 'personal'],
+            };
+
+            let timeout_handle = null;
+            element_to_typewrite.innerText = ' ';
+
+            const typewrite = () => {
+                if (
+                    typewrite_settings.letter_index <
+                    typewrite_settings.words[typewrite_settings.word_index]
+                        .length
+                ) {
+                    element_to_typewrite.innerText += typewrite_settings.words[
+                        typewrite_settings.word_index
+                    ].charAt(typewrite_settings.letter_index);
+                    typewrite_settings.letter_index += 1;
+                    timeout_handle = setTimeout(
+                        typewrite,
+                        typewrite_settings.timeout
+                    );
+                } else if (
+                    typewrite_settings.letter_index ==
+                    typewrite_settings.words[typewrite_settings.word_index]
+                        .length
+                ) {
+                    typewrite_settings.word_index =
+                        typewrite_settings.word_index & 1 ? 0 : 1;
+                    typewrite_settings.letter_index = 0;
+                    element_to_typewrite.innerText = ' ';
+                    timeout_handle = setTimeout(
+                        typewrite,
+                        typewrite_settings.timeout
+                    );
+                } else {
+                    clearTimeout(timeout_handle);
+                }
+            };
+
+            clearTimeout(timeout_handle);
+        </script>
     </body>
 </html>
