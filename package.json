@@ -4,7 +4,8 @@
   "description": "Pastebin like application's backend developed in NodeJS that utilizes local or remote storage and fetching.",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "sass": "sass --watch web/storedin.scss:web/storedin.min.css --style compressed"
   },
   "repository": {
     "type": "git",
