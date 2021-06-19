@@ -1,0 +1,129 @@
+/**
+ * Copyright (c) 2021, StoredIn
+ * Developed by: Prashant Shrestha
+ * Date: 2021-06-19
+ */
+
+$color_white: #ffffff;
+
+@mixin breakpoint($class) {
+    @if $class == xs {
+        @media (max-width: 767px) {
+            @content;
+        }
+    } @else if $class == sm {
+        @media (min-width: 768px) {
+            @content;
+        }
+    } @else if $class == md {
+        @media (min-width: 992px) {
+            @content;
+        }
+    } @else if $class == lg {
+        @media (min-width: 1200px) {
+            @content;
+        }
+    } @else {
+        @warn "Breakpoint mixin supports: xs, sm, md, lg";
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: $color_white;
+    font-size: 16px;
+    line-height: 23px;
+    font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
+        'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
+        'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+    .main-container {
+        width: 650px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+
+        // border: 1px solid red;
+
+        .main-header {
+            padding: 20px 0;
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            flex-wrap: wrap;
+
+            .logo {
+                font-size: x-large;
+                padding: 0 10px;
+                border-right: 2px solid black;
+            }
+
+            .description {
+                margin: 0 10px;
+                color: rgba(#000000, 0.4);
+            }
+
+            .year {
+                width: 100%;
+                overflow: hidden;
+                text-align: center;
+                margin: 15px 0;
+            }
+        }
+
+        .description {
+            font-size: 15px;
+            margin-bottom: 10px;
+
+            h1,
+            h2 {
+                font-weight: bold;
+                margin: 15px 0;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+            h2 {
+                font-size: 14px;
+            }
+
+            pre {
+                background-color: #000000;
+                overflow: auto;
+                padding: 10px 15px;
+                margin: 15px 0;
+                border-radius: 3px;
+                white-space: pre-wrap;
+                // clear: both;
+
+                code {
+                    color: $color_white;
+                    font-weight: normal;
+                    font-size: 14px;
+                    background-color: transparent;
+                }
+            }
+
+            code {
+                background-color: rgba(#f1494973, 0.3);
+                padding: 3px 5px;
+                font-weight: bold;
+            }
+
+            ul {
+                list-style-type: square;
+
+                li {
+                    margin: 5px 0 5px 10px;
+                }
+            }
+        }
+    }
+}
