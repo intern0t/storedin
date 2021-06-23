@@ -279,7 +279,7 @@
                 timeout: 400,
                 word_index: 0,
                 letter_index: 0,
-                words: ['simple', 'personal'],
+                words: ['simple', 'personal', 'private', 'robust'],
             };
 
             let timeout_handle = null;
@@ -305,7 +305,10 @@
                         .length
                 ) {
                     typewrite_settings.word_index =
-                        typewrite_settings.word_index & 1 ? 0 : 1;
+                        typewrite_settings.word_index + 1 >=
+                        typewrite_settings.words.length
+                            ? 0
+                            : typewrite_settings.word_index + 1;
                     typewrite_settings.letter_index = 0;
                     element_to_typewrite.innerText = ' ';
                     timeout_handle = setTimeout(
