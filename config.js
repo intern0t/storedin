@@ -10,7 +10,7 @@ module.exports = {
     /* Enable development mode */
     DEV: false,
     /* Specify the port where you want to launch the nodejs server */
-    PORT: 80,
+    PORT: 3000,
     /* Creation of paste minimum characters and maximum filesize of the paste allowed */
     DATA: {
         min: 50,

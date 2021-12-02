@@ -14,6 +14,9 @@ const { DEV, PORT, DIRECTORY } = require('./config.js');
 // Strictly for file & path management.
 global.__basedir = __dirname;
 
+// Heroku port specification.
+PORT = process.env.PORT || PORT
+
 // Development mode, use morgan to log requests & requests' type.
 if (DEV) {
     const morgan = require('morgan');
