@@ -24,7 +24,7 @@ module.exports = {
     DOMAIN:
         this.DEV === true
             ? `http://localhost:${this.PORT}/`
-            : 'https://paste.prashant.me/',
+            : 'https://storedin.herokuapp.com/',
     /* Whether to show the user how long ago the paste was created. e.g. 1hr ago./1yr ago. */
     OUTPUT: {
         data: false,
