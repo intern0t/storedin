@@ -151,11 +151,11 @@
             <section class="description">
                 <h1>Usage</h1>
                 <h2>- Using <code>curl</code></h2>
-                <pre><code class="language-shell">curl --data "data=$(cat somefile.ext)" https://paste.prashant.me</code></pre>
-                <pre><code class="language-shell">cat somefile.ext | curl --data-urlencode data@- https://paste.prashant.me</code></pre>
+                <pre><code class="language-shell">curl --data "data=$(cat somefile.ext)" https://storedin.herokuapp.com/</code></pre>
+                <pre><code class="language-shell">cat somefile.ext | curl --data-urlencode data@- https://storedin.herokuapp.com/</code></pre>
 
                 <h2>- Create an <code>alias</code> (Linux | Optional)</h2>
-                <pre><code>echo 'alias sim="curl --data-urlencode data@- https://paste.prashant.me"' >> ~/.bash_aliases && source ~/.bash_aliases</code></pre>
+                <pre><code>echo 'alias sim="curl --data-urlencode data@- https://storedin.herokuapp.com/"' >> ~/.bash_aliases && source ~/.bash_aliases</code></pre>
                 <pre><code>cat somefile.ext | sim</code></pre>
 
                 <h2>- Prettify (Linux | Optional)</h2>
@@ -165,7 +165,7 @@
                     response. You can pipe the output to <code>jq</code> by
                     appending <code>| jq</code> to the commands above.
                 </p>
-                <pre><code>cat somefile.ext | curl --data-urlencode data@- https://paste.prashant.me | jq</code></pre>
+                <pre><code>cat somefile.ext | curl --data-urlencode data@- https://storedin.herokuapp.com/ | jq</code></pre>
             </section>
 
             <!-- FEATURES -->
