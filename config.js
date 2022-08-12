@@ -20,11 +20,12 @@ module.exports = {
     DIRECTORY: {
         paste: 'paste',
     },
+    DOMAIN_BACKUP: 'https://storedin.herokuapp.com/',
     /* Domain you want to use, replace the defaults except for localhost part */
     DOMAIN:
         this.DEV === true
             ? `http://localhost:${this.PORT}/`
-            : 'https://storedin.herokuapp.com/',
+            : 'https://paste.prashant.me/',
     /* Whether to show the user how long ago the paste was created. e.g. 1hr ago./1yr ago. */
     OUTPUT: {
         data: false,

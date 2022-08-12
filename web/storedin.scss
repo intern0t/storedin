@@ -44,14 +44,16 @@ body {
 
     .main-container {
         @include breakpoint(xs) {
-            width: 400px;
+            padding: 20px;
         }
 
         @include breakpoint(sm) {
-            width: 700px;
+            width: 768px;
+            padding: 20px;
         }
         margin: 0 auto;
         margin-bottom: 100px;
+        padding: 20px;
         display: flex;
         flex-direction: column;
 
