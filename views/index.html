@@ -5,127 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>StoredIn | A simple pastebin.</title>
-        <!-- <link rel="stylesheet" href="storedin.min.css" /> -->
+        <!-- <link rel="stylesheet" href="./storedin.min.css" /> -->
         <style>
-            * {
-                margin: 0;
-                padding: 0;
-            }
-            body {
-                background-color: #fff;
-                font-size: 16px;
-                line-height: 23px;
-                font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono',
-                    'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
-                    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono',
-                    'Droid Sans Mono', 'Courier New', monospace;
-            }
-            body .main-container {
-                margin: 0 auto;
-                margin-bottom: 100px;
-                display: flex;
-                flex-direction: column;
-            }
-            @media (max-width: 767px) {
-                body .main-container {
-                    width: 400px;
-                }
-            }
-            @media (min-width: 768px) {
-                body .main-container {
-                    width: 700px;
-                }
-            }
-            body .main-container .main-header {
-                padding: 20px 0;
-                margin: 30px 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                align-content: center;
-                flex-wrap: wrap;
-            }
-            body .main-container .main-header .logo {
-                font-size: x-large;
-                padding: 0 10px;
-                border-right: 2px solid black;
-            }
-            body .main-container .main-header .description {
-                margin: 0 10px;
-                color: rgba(0, 0, 0, 0.4);
-                display: flex;
-                align-items: center;
-            }
-            body .main-container .main-header .description .typewrite-wrapper {
-                width: 84px;
-                background-color: #00d99c3b;
-                color: rgba(0, 0, 0, 0.8);
-                padding: 3px 5px;
-                display: inline-block;
-                text-align: center;
-                margin: 0 10px;
-            }
-            body
-                .main-container
-                .main-header
-                .description
-                .typewrite-wrapper
-                .typewrite {
-                width: 84px;
-                height: 22px;
-                display: flex;
-                text-align: center;
-                justify-content: center;
-                align-content: center;
-                align-items: center;
-            }
-            body .main-container .main-header .year {
-                width: 100%;
-                overflow: hidden;
-                text-align: center;
-                margin: 15px 0;
-            }
-            body .main-container .description {
-                font-size: 15px;
-                margin-bottom: 10px;
-            }
-            body .main-container .description h1,
-            body .main-container .description h2 {
-                font-weight: bold;
-                margin: 15px 0;
-            }
-            body .main-container .description h1 {
-                font-size: 20px;
-            }
-            body .main-container .description h2 {
-                font-size: 14px;
-            }
-            body .main-container .description pre {
-                background-color: #000000;
-                overflow: auto;
-                padding: 10px 15px;
-                margin: 15px 0;
-                border-radius: 3px;
-                white-space: pre-wrap;
-            }
-            body .main-container .description pre code {
-                color: #fff;
-                font-weight: normal;
-                font-size: 14px;
-                background-color: transparent;
-            }
-            body .main-container .description code {
-                background-color: rgba(241, 73, 73, 0.3);
-                padding: 3px 5px;
-                font-weight: bold;
-            }
-            body .main-container .description ul {
-                list-style-type: square;
-            }
-            body .main-container .description ul li {
-                margin: 5px 0 5px 10px;
-            }
-            /*# sourceMappingURL=storedin.min.css.map */
+            *{margin:0;padding:0}body{background-color:#fff;font-size:16px;line-height:23px;font-family:ui-monospace,Menlo,Monaco,"Cascadia Mono","Segoe UI Mono","Roboto Mono","Oxygen Mono","Ubuntu Monospace","Source Code Pro","Fira Mono","Droid Sans Mono","Courier New",monospace}body .main-container{margin:0 auto;margin-bottom:100px;padding:20px;display:flex;flex-direction:column}@media(max-width: 767px){body .main-container{padding:20px}}@media(min-width: 768px){body .main-container{width:768px;padding:20px}}body .main-container .main-header{padding:20px 0;margin:30px 0;display:flex;justify-content:center;align-items:center;align-content:center;flex-wrap:wrap}body .main-container .main-header .logo{font-size:x-large;padding:0 10px;border-right:2px solid #000}body .main-container .main-header .description{margin:0 10px;color:rgba(0,0,0,.4);display:flex;align-items:center}body .main-container .main-header .description .typewrite-wrapper{width:84px;background-color:rgba(0,217,156,.231372549);color:rgba(0,0,0,.8);padding:3px 5px;display:inline-block;text-align:center;margin:0 10px}body .main-container .main-header .description .typewrite-wrapper .typewrite{width:84px;height:22px;display:flex;text-align:center;justify-content:center;align-content:center;align-items:center}body .main-container .main-header .year{width:100%;overflow:hidden;text-align:center;margin:15px 0}body .main-container .description{font-size:15px;margin-bottom:10px}body .main-container .description h1,body .main-container .description h2{font-weight:bold;margin:15px 0}body .main-container .description h1{font-size:20px}body .main-container .description h2{font-size:14px}body .main-container .description pre{background-color:#000;overflow:auto;padding:10px 15px;margin:15px 0;border-radius:3px;white-space:pre-wrap}body .main-container .description pre code{color:#fff;font-weight:normal;font-size:14px;background-color:rgba(0,0,0,0)}body .main-container .description code{background-color:rgba(241,73,73,.3);padding:3px 5px;font-weight:bold}body .main-container .description ul{list-style-type:square}body .main-container .description ul li{margin:5px 0 5px 10px}/*# sourceMappingURL=storedin.min.css.map */
         </style>
     </head>
     <body onload="typewrite()">
@@ -142,7 +24,7 @@
                 <span class="year">2020-*</span>
             </section>
             <section class="description">
-                StoredIn is a simple pastebin alternative to store raw text
+                <a href="https://github.com/intern0t/storedin" title="StoredIn">StoredIn</a> is a simple pastebin alternative to store raw text
                 data. StoredIn is developed using NodeJS and stores all the
                 contents locally in two distributed servers.
             </section>
@@ -151,11 +33,11 @@
             <section class="description">
                 <h1>Usage</h1>
                 <h2>- Using <code>curl</code></h2>
-                <pre><code class="language-shell">curl --data "data=$(cat somefile.ext)" https://storedin.herokuapp.com/</code></pre>
-                <pre><code class="language-shell">cat somefile.ext | curl --data-urlencode data@- https://storedin.herokuapp.com/</code></pre>
+                <pre><code class="language-shell">curl --data "data=$(cat somefile.ext)" https://paste.prashant.me</code></pre>
+                <pre><code class="language-shell">cat somefile.ext | curl --data-urlencode data@- https://paste.prashant.me</code></pre>
 
                 <h2>- Create an <code>alias</code> (Linux | Optional)</h2>
-                <pre><code>echo 'alias sim="curl --data-urlencode data@- https://storedin.herokuapp.com/"' >> ~/.bash_aliases && source ~/.bash_aliases</code></pre>
+                <pre><code>echo 'alias sim="curl --data-urlencode data@- https://paste.prashant.me"' >> ~/.bash_aliases && source ~/.bash_aliases</code></pre>
                 <pre><code>cat somefile.ext | sim</code></pre>
 
                 <h2>- Prettify (Linux | Optional)</h2>
@@ -165,7 +47,7 @@
                     response. You can pipe the output to <code>jq</code> by
                     appending <code>| jq</code> to the commands above.
                 </p>
-                <pre><code>cat somefile.ext | curl --data-urlencode data@- https://storedin.herokuapp.com/ | jq</code></pre>
+                <pre><code>cat somefile.ext | curl --data-urlencode data@- https://paste.prashant.me | jq</code></pre>
             </section>
 
             <!-- FEATURES -->

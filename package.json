@@ -6,7 +6,7 @@
     "scripts": {
         "start": "node app.js",
         "test": "jest",
-        "sass": "sass --watch web/storedin.scss:web/storedin.min.css --style compressed"
+        "sass": "sass --watch web/storedin.scss:views/storedin.min.css --style compressed"
     },
     "repository": {
         "type": "git",
