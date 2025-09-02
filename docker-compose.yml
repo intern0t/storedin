@@ -1,0 +1,16 @@
+
+name: StoredIn
+
+services:
+  app:
+    build: .
+    volumes:
+      - ./paste:/app/paste
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_NAME=${APP_NAME}
+      - PORT=${PORT}
+      - DOMAIN=${DOMAIN}
+      - DEV=${DEV}
+    restart: unless-stopped

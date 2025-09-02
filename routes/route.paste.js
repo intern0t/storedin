@@ -16,7 +16,7 @@ const fs = require('fs');
 const dayjs = require('dayjs');
 var relativeTime = require('dayjs/plugin/relativeTime');
 const rateLimit = require('express-rate-limit');
-const { DATA, DIRECTORY, DOMAIN, OUTPUT, LIMIT } = require('../config');
+const { DATA, DIRECTORY, DOMAIN, OUTPUT, LIMIT, DEV, PORT } = require('../config');
 
 // Setting up default rate limit options (150 paste views/15 min)
 const viewPasteRateLimit = rateLimit({
@@ -141,15 +141,17 @@ pasteRouter.post(
 
                 await fs.stat(pasteFilePath, function (err, stat) {
                     if (err == null) {
+                        _domain = DEV ? `http://localhost:${PORT}/` : DOMAIN;
+
                         // 201 Created
                         res.status(201).json({
                             error: false,
                             message:
                                 'Successfully stored the paste in our storage.',
                             id: req.body.data.id,
-                            link: `${DOMAIN}${req.body.data.id}`,
+                            link: `${_domain}${req.body.data.id}`,
                             deleteKey: req.body.data.deleteKey,
-                            deleteLink: `${DOMAIN}${req.body.data.id}/${req.body.data.deleteKey}`,
+                            deleteLink: `${_domain}${req.body.data.id}/${req.body.data.deleteKey}`,
                             timestamp: req.body.data.timestamp,
                         });
                     } else if (err.code == 'ENOENT') {

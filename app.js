@@ -9,13 +9,10 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const { DEV, DIRECTORY } = require('./config.js');
+const { PORT, DEV, DIRECTORY } = require('./config.js');
 
 // Strictly for file & path management.
 global.__basedir = __dirname;
-
-// Heroku port specification.
-const PORT = process.env.PORT || 80;
 
 // Development mode, use morgan to log requests & requests' type.
 if (DEV) {
