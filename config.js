@@ -8,9 +8,9 @@
 
 module.exports = {
     /* Enable development mode */
-    DEV: false,
+    DEV: process.env.DEV === 'true' || false,
     /* Specify the port where you want to launch the nodejs server */
-    PORT: 3000,
+    PORT: process.env.PORT || 3000,
     /* Creation of paste minimum characters and maximum filesize of the paste allowed */
     DATA: {
         min: 50,
@@ -25,7 +25,7 @@ module.exports = {
     DOMAIN:
         this.DEV === true
             ? `http://localhost:${this.PORT}/`
-            : 'https://paste.prashant.me/',
+            : `${process.env.DOMAIN || this.DOMAIN_BACKUP}`,
     /* Whether to show the user how long ago the paste was created. e.g. 1hr ago./1yr ago. */
     OUTPUT: {
         data: false,
