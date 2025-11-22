@@ -29,6 +29,7 @@ module.exports = {
     /* Whether to show the user how long ago the paste was created. e.g. 1hr ago./1yr ago. */
     OUTPUT: {
         data: false,
+        paste_id_length: process.env.FILENAME_LENGTH || 6,
     },
     /* Traffic control and limitation section */
     LIMIT: {

@@ -13,4 +13,5 @@ services:
       - PORT=${PORT}
       - DOMAIN=${DOMAIN}
       - DEV=${DEV}
+      - FILENAME_LENGTH=${FILENAME_LENGTH}
     restart: unless-stopped
