@@ -16,6 +16,7 @@ const fs = require('fs');
 const dayjs = require('dayjs');
 var relativeTime = require('dayjs/plugin/relativeTime');
 const rateLimit = require('express-rate-limit');
+var crypto = require('crypto');
 const { DATA, DIRECTORY, DOMAIN, OUTPUT, LIMIT, DEV, PORT } = require('../config');
 
 // Setting up default rate limit options (150 paste views/15 min)
@@ -52,6 +53,7 @@ pasteRouter.use(compression());
 // Setting up daysjs
 OUTPUT.data ? dayjs.extend(relativeTime) : null;
 
+
 pasteRouter.get('/favicon.ico', function (req, res) {
     res.statusCode = 200;
     // res.setHeader('Content-Length', favicon.length);
@@ -61,14 +63,24 @@ pasteRouter.get('/favicon.ico', function (req, res) {
     res.sendFile(__basedir + '/views/favicon.ico');
 });
 
+const trimId = (id, length) => {
+    return id.length > length ? id.substring(0, length) : id;
+};
+
 /**
  * Middleware for the create paste route, check if the data provided matches the criteria and take the necessary steps after verification.
  */
 var postRequestMiddleware = async (req, res, next) => {
     if (req.body && req.body.data && req.body.data.length >= DATA.min) {
         // For the new paste creation/storage.
+        let md5 = crypto.createHash('md5').update(req.body.data).digest('hex');
+
         let pasteData = {
-            id: shortid.generate(),
+            id:
+                OUTPUT.paste_id_length > 0
+                    ? trimId(md5, OUTPUT.paste_id_length)
+                    : md5,
+            md5: md5,
             timestamp: dayjs().unix(),
             ip:
                 req.headers['Cf-Pseudo-IPv4'] ||
@@ -103,75 +115,84 @@ pasteRouter.post(
                 req.body.data &&
                 req.body.data.id &&
                 req.body.data.timestamp,
-            req.body.data.deleteKey,
-            req.body.data.ip,
-            req.body.data.data)
+                req.body.data.deleteKey,
+                req.body.data.ip,
+                req.body.data.data)
         ) {
-            let pasteFilePath = `${__basedir}/${
-                DIRECTORY.paste
-            }/${req.body.data.id.substr(0, 2)}/${req.body.data.id}`;
+            let pasteFilePath = `${__basedir}/${DIRECTORY.paste
+                }/${req.body.data.id.substr(0, 2)}/${req.body.data.id}`;
 
-            try {
-                await fs.promises.mkdir(
-                    path.parse(pasteFilePath).dir,
-                    (err) => {
-                        if (err) {
-                            res.status(507).json({
-                                error: true,
-                                message: 'Could not create directory.',
+            fs.promises
+                .stat(pasteFilePath)
+                .then(async () => {
+                    // File exists, return the file contents.
+                    const data = await fs.promises.readFile(pasteFilePath);
+                    const formattedData = JSON.parse(data);
+                    _domain = DEV ? `http://localhost:${PORT}/` : DOMAIN;
+
+                    res.status(200).json({
+                        error: false,
+                        message: 'Paste already exists, returning existing data.',
+                        id: formattedData.id,
+                        link: `${_domain}${formattedData.id}`,
+                        deleteKey: formattedData.deleteKey,
+                        deleteLink: `${_domain}${formattedData.id}/${formattedData.deleteKey}`,
+                        timestamp: formattedData.timestamp,
+                    });
+                })
+                .catch((err) => {
+                    if (err.code === 'ENOENT') {
+                        // File does not exist, create it.
+                        return fs.promises
+                            .mkdir(path.parse(pasteFilePath).dir, {
+                                recursive: true,
+                            })
+                            .then(() => {
+                                return fs.promises.writeFile(
+                                    pasteFilePath,
+                                    JSON.stringify(req.body.data)
+                                );
+                            })
+                            .then(() => {
+                                return fs.promises.stat(pasteFilePath);
+                            })
+                            .then((stat) => {
+                                _domain = DEV
+                                    ? `http://localhost:${PORT}/`
+                                    : DOMAIN;
+
+                                // 201 Created
+                                res.status(201).json({
+                                    error: false,
+                                    message:
+                                        'Successfully stored the paste in our storage.',
+                                    id: req.body.data.id,
+                                    link: `${_domain}${req.body.data.id}`,
+                                    deleteKey: req.body.data.deleteKey,
+                                    deleteLink: `${_domain}${req.body.data.id}/${req.body.data.deleteKey}`,
+                                    timestamp: req.body.data.timestamp,
+                                });
                             });
-                        }
+                    } else {
+                        throw err;
                     }
-                );
-
-                await fs.promises.writeFile(
-                    pasteFilePath,
-                    JSON.stringify(req.body.data),
-                    (err) => {
-                        if (err) {
-                            // 507 Insufficient Storage (WebDAV)
-                            res.status(507).json({
-                                error: true,
-                                message:
-                                    'Error storing the file in our storage.',
-                            });
-                        }
-                    }
-                );
-
-                await fs.stat(pasteFilePath, function (err, stat) {
-                    if (err == null) {
-                        _domain = DEV ? `http://localhost:${PORT}/` : DOMAIN;
-
-                        // 201 Created
-                        res.status(201).json({
-                            error: false,
-                            message:
-                                'Successfully stored the paste in our storage.',
-                            id: req.body.data.id,
-                            link: `${_domain}${req.body.data.id}`,
-                            deleteKey: req.body.data.deleteKey,
-                            deleteLink: `${_domain}${req.body.data.id}/${req.body.data.deleteKey}`,
-                            timestamp: req.body.data.timestamp,
-                        });
-                    } else if (err.code == 'ENOENT') {
-                        // 507 Insufficient Storage (WebDAV)
+                })
+                .catch((err) => {
+                    console.log('Error: ', err);
+                    if (err.code === 'ENOENT') {
                         res.status(507).json({
                             error: true,
                             message:
                                 'We were unable to store your data in our server at this time, feel free to contact the administrator or try again!',
                         });
+                    } else {
+                        res.status(500).json({
+                            error: true,
+                            message:
+                                'Server ran into an error when trying to create a paste with your data.',
+                        });
                     }
                 });
-            } catch (e) {
-                console.log('Error: ', e);
-                // 500 Internal Server Error
-                res.status(500).json({
-                    error: true,
-                    message:
-                        'Server ran into an error when trying to create a paste with your data.',
-                });
-            }
         } else {
             // 400 Bad Request
             res.status(400).json({
@@ -187,7 +208,7 @@ pasteRouter.post(
  * Middelware for GET request (handles separately, depending on the input.)
  */
 var getRequestMiddelware = async (req, res, next) => {
-    if (req.params && req.params.id && shortid.isValid(req.params.id)) {
+    if (req.params && req.params.id && req.params.id.match(/^[a-zA-Z0-9_-]+$/)) {
         next();
     } else {
         res.status(200).sendFile(await `/views/index.html`, {
@@ -213,9 +234,8 @@ pasteRouter.get(
     async (req, res) => {
         if (req.params && req.params.id) {
             try {
-                let pasteFilePath = `${__basedir}/${
-                    DIRECTORY.paste
-                }/${req.params.id.substr(0, 2)}/${req.params.id}`;
+                let pasteFilePath = `${__basedir}/${DIRECTORY.paste
+                    }/${req.params.id.substr(0, 2)}/${req.params.id}`;
 
                 fs.stat(pasteFilePath, async (err, stat) => {
                     if (err == null) {
@@ -245,10 +265,9 @@ pasteRouter.get(
                                 );
                                 res.type('txt');
                                 res.status(200).send(
-                                    `${formattedData.data}${
-                                        OUTPUT.data
-                                            ? '\n\nCreated - ' + ts.fromNow()
-                                            : ''
+                                    `${formattedData.data}${OUTPUT.data
+                                        ? '\n\nCreated - ' + ts.fromNow()
+                                        : ''
                                     }`
                                 );
                             }
@@ -283,13 +302,12 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
         req.params &&
         req.params.id &&
         req.params.deleteKey &&
-        shortid.isValid(req.params.id) &&
+        req.params.id.match(/^[a-zA-Z0-9_-]+$/) &&
         validate(req.params.deleteKey)
     ) {
         try {
-            let pasteFilePath = `${__basedir}/${
-                DIRECTORY.paste
-            }/${req.params.id.substr(0, 2)}/${req.params.id}`;
+            let pasteFilePath = `${__basedir}/${DIRECTORY.paste
+                }/${req.params.id.substr(0, 2)}/${req.params.id}`;
 
             fs.stat(pasteFilePath, async (err, stat) => {
                 if (err == null) {
@@ -350,7 +368,7 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
                         }
                     });
                 } else if (err.code === 'ENOENT') {
-                    res.json({
+                    res.status(404).json({
                         error: true,
                         message: `Could not find the file associated with id (${req.params.id}).`,
                     });
