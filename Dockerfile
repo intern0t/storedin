@@ -1,14 +1,17 @@
 # Use official Node.js LTS image
-FROM node:20
+FROM node:20-slim
 
 # Set working directory inside container
 WORKDIR /app
 
-# Copy package.json and package-lock.json first
+# Set NODE_ENV to production
+ENV NODE_ENV=production
+
+# Only copy package manifests first
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install only production deps, no cache
+RUN npm ci --omit=dev && npm cache clean --force
 
 # Copy the rest of the project files
 COPY . .
