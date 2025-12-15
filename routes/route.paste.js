@@ -10,14 +10,21 @@ const pasteRouter = require('express-promise-router')();
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const { v1, validate } = require('uuid');
-const shortid = require('shortid');
 const path = require('path');
 const fs = require('fs');
 const dayjs = require('dayjs');
 var relativeTime = require('dayjs/plugin/relativeTime');
 const rateLimit = require('express-rate-limit');
 var crypto = require('crypto');
-const { DATA, DIRECTORY, DOMAIN, OUTPUT, LIMIT, DEV, PORT } = require('../config');
+const {
+    DATA,
+    DIRECTORY,
+    DOMAIN,
+    OUTPUT,
+    LIMIT,
+    DEV,
+    PORT,
+} = require('../config');
 
 // Setting up default rate limit options (150 paste views/15 min)
 const viewPasteRateLimit = rateLimit({
@@ -52,7 +59,6 @@ pasteRouter.use(compression());
 
 // Setting up daysjs
 OUTPUT.data ? dayjs.extend(relativeTime) : null;
-
 
 pasteRouter.get('/favicon.ico', function (req, res) {
     res.statusCode = 200;
@@ -115,12 +121,13 @@ pasteRouter.post(
                 req.body.data &&
                 req.body.data.id &&
                 req.body.data.timestamp,
-                req.body.data.deleteKey,
-                req.body.data.ip,
-                req.body.data.data)
+            req.body.data.deleteKey,
+            req.body.data.ip,
+            req.body.data.data)
         ) {
-            let pasteFilePath = `${__basedir}/${DIRECTORY.paste
-                }/${req.body.data.id.substr(0, 2)}/${req.body.data.id}`;
+            let pasteFilePath = `${__basedir}/${
+                DIRECTORY.paste
+            }/${req.body.data.id.substr(0, 2)}/${req.body.data.id}`;
 
             fs.promises
                 .stat(pasteFilePath)
@@ -128,11 +135,15 @@ pasteRouter.post(
                     // File exists, return the file contents.
                     const data = await fs.promises.readFile(pasteFilePath);
                     const formattedData = JSON.parse(data);
-                    _domain = DEV ? `http://localhost:${PORT}/` : DOMAIN;
+                    let _domain = DEV ? `http://localhost:${PORT}/` : DOMAIN;
+                    DOMAIN;
+
+                    console.log(`_domain if exists: ${DOMAIN}`, DEV, PORT);
 
                     res.status(200).json({
                         error: false,
-                        message: 'Paste already exists, returning existing data.',
+                        message:
+                            'Paste already exists, returning existing data.',
                         id: formattedData.id,
                         link: `${_domain}${formattedData.id}`,
                         deleteKey: formattedData.deleteKey,
@@ -157,9 +168,13 @@ pasteRouter.post(
                                 return fs.promises.stat(pasteFilePath);
                             })
                             .then((stat) => {
-                                _domain = DEV
+                                let _domain = DEV
                                     ? `http://localhost:${PORT}/`
                                     : DOMAIN;
+
+                                console.log(
+                                    `_domain after creation: ${_domain}`
+                                );
 
                                 // 201 Created
                                 res.status(201).json({
@@ -205,13 +220,56 @@ pasteRouter.post(
 );
 
 /**
- * Middelware for GET request (handles separately, depending on the input.)
+ * Generates an ETag based ONLY on file metadata (size + modification time).
  */
-var getRequestMiddelware = async (req, res, next) => {
-    if (req.params && req.params.id && req.params.id.match(/^[a-zA-Z0-9_-]+$/)) {
+async function getFileMetaETag(pasteId) {
+    try {
+        const fabricated_path = `${__basedir}/${
+            DIRECTORY.paste
+        }/${pasteId.substr(0, 2)}/${pasteId}`;
+
+        // Uses fs.promises to be non-blocking
+        const stats = await fs.promises.stat(fabricated_path);
+
+        const size = stats.size;
+        const mtime = stats.mtimeMs;
+        const dataString = `${pasteId}-${size}-${mtime}`;
+
+        return crypto.createHash('md5').update(dataString).digest('hex');
+    } catch (err) {
+        if (err.code === 'ENOENT') return null;
+        throw err;
+    }
+}
+
+/**
+ * Middleware for GET request.
+ * RESPONSIBILITY: Handle caching (304) and set ETag headers.
+ */
+var getRequestMiddleware = async (req, res, next) => {
+    if (
+        req.params &&
+        req.params.id &&
+        req.params.id.match(/^[a-zA-Z0-9_-]+$/)
+    ) {
+        // 1. Calculate ETag
+        const latestETag = await getFileMetaETag(req.params.id);
+
+        if (latestETag) {
+            // 2. Set the header for the *upcoming* response
+            res.setHeader('ETag', latestETag);
+
+            // 3. Check if client has this version
+            if (req.headers['if-none-match'] === latestETag) {
+                // STOP HERE: Client has the file.
+                return res.status(304).end();
+            }
+        }
+        // 4. Client needs the file, proceed to route handler
         next();
     } else {
-        res.status(200).sendFile(await `/views/index.html`, {
+        // Serve index if ID is invalid/missing
+        res.status(200).sendFile('/views/index.html', {
             root: __basedir,
         });
     }
@@ -219,65 +277,58 @@ var getRequestMiddelware = async (req, res, next) => {
 
 pasteRouter.get('/', async (req, res) => {
     res.set({
-        // 'Content-Type': 'text/plain',
         'Content-Disposition': `inline; filename="index"`,
         'Keep-Alive': 'timeout=5, max=1000',
         'Cache-Control': 'public, max-age=3600',
     });
-    res.setHeader('Cache-Control', 'public, max-age=3600');
-    res.status(200).sendFile(await `/views/index.html`, { root: __basedir });
+    res.status(200).sendFile('/views/index.html', { root: __basedir });
 });
 
+/**
+ * RESPONSIBILITY: Read file and send content.
+ * (Caching is already handled by middleware)
+ */
 pasteRouter.get(
     '/:id',
-    [getRequestMiddelware, viewPasteRateLimit],
+    [getRequestMiddleware, viewPasteRateLimit],
     async (req, res) => {
         if (req.params && req.params.id) {
             try {
-                let pasteFilePath = `${__basedir}/${DIRECTORY.paste
-                    }/${req.params.id.substr(0, 2)}/${req.params.id}`;
+                let pasteFilePath = `${__basedir}/${
+                    DIRECTORY.paste
+                }/${req.params.id.substr(0, 2)}/${req.params.id}`;
 
-                fs.stat(pasteFilePath, async (err, stat) => {
-                    if (err == null) {
-                        // File exists, return the file contents.
-                        await fs.readFile(pasteFilePath, (err, data) => {
-                            if (err || !data) {
-                                // 404 Not Found
-                                res.status(404).json({
-                                    error: true,
-                                    message:
-                                        'We ran into an error while fetching the file with the id you provided.',
-                                });
-                            }
-                            // No error, send the content.
-                            let formattedData = JSON.parse(data);
-                            if (formattedData && formattedData.data) {
-                                let ts = dayjs(formattedData.timestamp * 1000);
-                                res.set({
-                                    'Content-Type': 'text/plain',
-                                    'Content-Disposition': `inline; filename="${formattedData.id}.txt"`,
-                                    'Keep-Alive': 'timeout=5, max=1000',
-                                    'Cache-Control': 'public, max-age=2592000',
-                                });
-                                res.setHeader(
-                                    'Cache-Control',
-                                    'public, max-age=2592000'
-                                );
-                                res.type('txt');
-                                res.status(200).send(
-                                    `${formattedData.data}${OUTPUT.data
-                                        ? '\n\nCreated - ' + ts.fromNow()
-                                        : ''
-                                    }`
-                                );
-                            }
-                        });
-                    } else if (err.code === 'ENOENT') {
-                        // 404 Not Found
-                        res.status(404).json({
+                // Note: You can switch this to fs.promises.readFile for consistency if desired
+                fs.readFile(pasteFilePath, (err, data) => {
+                    if (err || !data) {
+                        return res.status(404).json({
                             error: true,
-                            message: `Could not find the file associated with id (${req.params.id}).`,
+                            message:
+                                'The file with the id you provided does not exist in our storage.',
                         });
+                    }
+
+                    // Parse Data
+                    let formattedData = JSON.parse(data);
+
+                    if (formattedData && formattedData.data) {
+                        let ts = dayjs(formattedData.timestamp * 1000);
+
+                        res.set({
+                            'Content-Type': 'text/plain',
+                            'Content-Disposition': `inline; filename="${formattedData.id}.txt"`,
+                            'Keep-Alive': 'timeout=5, max=1000',
+                            'Cache-Control': 'no-cache', // Important: Force revalidation (check ETag)
+                        });
+                        // ETag header is ALREADY SET by getRequestMiddleware
+
+                        res.status(200).send(
+                            `${formattedData.data}${
+                                OUTPUT.data
+                                    ? '\n\nCreated - ' + ts.fromNow()
+                                    : ''
+                            }`
+                        );
                     }
                 });
             } catch (e) {
@@ -306,12 +357,12 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
         validate(req.params.deleteKey)
     ) {
         try {
-            let pasteFilePath = `${__basedir}/${DIRECTORY.paste
-                }/${req.params.id.substr(0, 2)}/${req.params.id}`;
+            let pasteFilePath = `${__basedir}/${
+                DIRECTORY.paste
+            }/${req.params.id.substr(0, 2)}/${req.params.id}`;
 
             fs.stat(pasteFilePath, async (err, stat) => {
                 if (err == null) {
-                    // File exists, let's check and validate.
                     fs.readFile(pasteFilePath, async (err, data) => {
                         if (err || !data) {
                             res.status(404).json({
@@ -335,7 +386,7 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
                                 if (err) {
                                     res.status(500).json({
                                         error: true,
-                                        message: `Server encountered a problem when trying to delete the paste file with id ${formattedData.id}.`,
+                                        message: `Server encountered a problem when trying to delete the paste file.`,
                                     });
                                     throw err;
                                 }
@@ -344,14 +395,9 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
                                 await fs.rmdir(
                                     path.dirname(pasteFilePath),
                                     (err) => {
-                                        if (err) {
-                                            if (err.code === 'ENOTEMPTY') {
-                                                console.log(
-                                                    `Paste with id ${formattedData.id} has been deleted!`
-                                                );
-                                            }
+                                        if (err && err.code !== 'ENOTEMPTY') {
+                                            console.log(err);
                                         }
-
                                         res.status(200).json({
                                             error: false,
                                             message: `Paste with id (${formattedData.id}) has been deleted!`,
@@ -363,7 +409,7 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
                             // 401 Unauthorized
                             res.status(401).json({
                                 error: true,
-                                message: `You do not have the permission to delete the paste with id, ${formattedData.id}.`,
+                                message: `You do not have the permission to delete this paste.`,
                             });
                         }
                     });
@@ -379,13 +425,13 @@ pasteRouter.get('/:id/:deleteKey', createPasteRateLimit, async (req, res) => {
             // 500 Internal Server Error
             res.status(500).json({
                 error: true,
-                message: `Server ran into an error when trying to delete a paste with id (${req.params.id}).`,
+                message: `Server ran into an error when trying to delete a paste.`,
             });
         }
     } else {
         res.status(400).json({
             error: true,
-            message: `We could not identify the paste id (${req.params.id}) and the delete key you provided. The paste is not deleted.`,
+            message: `Invalid ID or Delete Key.`,
         });
     }
 });

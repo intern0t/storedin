@@ -7,7 +7,134 @@
         <title>StoredIn | A simple pastebin.</title>
         <!-- <link rel="stylesheet" href="./storedin.min.css" /> -->
         <style>
-            *{margin:0;padding:0}body{background-color:#fff;font-size:16px;line-height:23px;font-family:ui-monospace,Menlo,Monaco,"Cascadia Mono","Segoe UI Mono","Roboto Mono","Oxygen Mono","Ubuntu Monospace","Source Code Pro","Fira Mono","Droid Sans Mono","Courier New",monospace}body .main-container{margin:0 auto;margin-bottom:100px;padding:20px;display:flex;flex-direction:column}@media(max-width: 767px){body .main-container{padding:20px}}@media(min-width: 768px){body .main-container{width:768px;padding:20px}}body .main-container .main-header{padding:20px 0;margin:30px 0;display:flex;justify-content:center;align-items:center;align-content:center;flex-wrap:wrap}body .main-container .main-header .logo{font-size:x-large;padding:0 10px;border-right:2px solid #000}body .main-container .main-header .description{margin:0 10px;color:rgba(0,0,0,.4);display:flex;align-items:center}body .main-container .main-header .description .typewrite-wrapper{width:84px;background-color:rgba(0,217,156,.231372549);color:rgba(0,0,0,.8);padding:3px 5px;display:inline-block;text-align:center;margin:0 10px}body .main-container .main-header .description .typewrite-wrapper .typewrite{width:84px;height:22px;display:flex;text-align:center;justify-content:center;align-content:center;align-items:center}body .main-container .main-header .year{width:100%;overflow:hidden;text-align:center;margin:15px 0}body .main-container .description{font-size:15px;margin-bottom:10px}body .main-container .description h1,body .main-container .description h2{font-weight:bold;margin:15px 0}body .main-container .description h1{font-size:20px}body .main-container .description h2{font-size:14px}body .main-container .description pre{background-color:#000;overflow:auto;padding:10px 15px;margin:15px 0;border-radius:3px;white-space:pre-wrap}body .main-container .description pre code{color:#fff;font-weight:normal;font-size:14px;background-color:rgba(0,0,0,0)}body .main-container .description code{background-color:rgba(241,73,73,.3);padding:3px 5px;font-weight:bold}body .main-container .description ul{list-style-type:square}body .main-container .description ul li{margin:5px 0 5px 10px}/*# sourceMappingURL=storedin.min.css.map */
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background-color: #fff;
+                font-size: 16px;
+                line-height: 23px;
+                font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono',
+                    'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
+                    'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono',
+                    'Droid Sans Mono', 'Courier New', monospace;
+            }
+            @media (max-width: 767px) {
+                body .main-container {
+                    padding: 20px;
+                }
+            }
+            @media (min-width: 768px) {
+                body .main-container {
+                    width: 768px;
+                    padding: 20px;
+                }
+            }
+            body .main-container {
+                margin: 0 auto;
+                margin-bottom: 100px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+            body .main-container .main-header {
+                padding: 20px 0;
+                margin: 30px 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                align-content: center;
+                flex-wrap: wrap;
+            }
+            body .main-container .main-header .logo {
+                font-size: x-large;
+                padding: 0 10px;
+                border-right: 2px solid #000;
+            }
+            body .main-container .main-header .description {
+                margin: 0 10px;
+                color: rgba(0, 0, 0, 0.4);
+                display: flex;
+                align-items: center;
+            }
+            body .main-container .main-header .description .typewrite-wrapper {
+                width: 84px;
+                background-color: rgba(0, 217, 156, 0.231372549);
+                color: rgba(0, 0, 0, 0.8);
+                padding: 3px 5px;
+                display: inline-block;
+                text-align: center;
+                margin: 0 10px;
+            }
+            body
+                .main-container
+                .main-header
+                .description
+                .typewrite-wrapper
+                .typewrite {
+                width: 84px;
+                height: 22px;
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                align-content: center;
+                align-items: center;
+            }
+            body .main-container .main-header .year {
+                width: 100%;
+                overflow: hidden;
+                text-align: center;
+                margin: 15px 0;
+            }
+            body .main-container .main-header .code_revision {
+                width: 100%;
+                overflow: hidden;
+                text-align: center;
+                margin: 0;
+                font-size: 10px;
+                color: rgba(0, 0, 0, 0.4);
+            }
+            body .main-container .description {
+                font-size: 15px;
+                margin-bottom: 10px;
+            }
+            body .main-container .description h1,
+            body .main-container .description h2 {
+                font-weight: bold;
+                margin: 15px 0;
+            }
+            body .main-container .description h1 {
+                font-size: 20px;
+            }
+            body .main-container .description h2 {
+                font-size: 14px;
+            }
+            body .main-container .description pre {
+                background-color: #000;
+                overflow: auto;
+                padding: 10px 15px;
+                margin: 15px 0;
+                border-radius: 3px;
+                white-space: pre-wrap;
+            }
+            body .main-container .description pre code {
+                color: #fff;
+                font-weight: normal;
+                font-size: 14px;
+                background-color: rgba(0, 0, 0, 0);
+            }
+            body .main-container .description code {
+                background-color: rgba(241, 73, 73, 0.3);
+                padding: 3px 5px;
+                font-weight: bold;
+            }
+            body .main-container .description ul {
+                list-style-type: square;
+            }
+            body .main-container .description ul li {
+                margin: 5px 0 5px 10px;
+            } /*# sourceMappingURL=storedin.min.css.map */
         </style>
     </head>
     <body onload="typewrite()">
@@ -22,11 +149,15 @@
                     pastebin.
                 </div>
                 <span class="year">2020-*</span>
+                <span class="code_revision">Revision: 1.0.2-8a3752</span>
             </section>
             <section class="description">
-                <a href="https://github.com/intern0t/storedin" title="StoredIn">StoredIn</a> is a simple pastebin alternative to store raw text
-                data. StoredIn is developed using NodeJS and stores all the
-                contents locally in two distributed servers.
+                <a href="https://github.com/intern0t/storedin" title="StoredIn"
+                    >StoredIn</a
+                >
+                is a simple pastebin alternative to store raw text data.
+                StoredIn is developed using NodeJS and stores all the contents
+                locally in two distributed servers.
             </section>
 
             <!-- USAGE -->
@@ -109,11 +240,7 @@
                 <p>
                     I will wipe ALL the paste files if I need more storage or
                     make spots for my paste. Please do not expect the paste you
-                    store to have infinite retention. For now, I'm allocating
-                    around 100GB per server = ~((1024 * 100)Mb/~3Mb limit/paste)
-                    =
-                    <strong>~34 133.333 33 total paste files per server</strong
-                    >.
+                    store to have infinite retention.
                 </p>
             </section>
 
@@ -121,12 +248,19 @@
             <section class="description">
                 <h1>Changelog</h1>
                 <ul>
-			<li>
-				<strong>Thu 30 Dec 2021:</strong> Deployed back to personal servers, 20 GB storage allotted.
+                    <li>
+                        <strong>Sun 14 Dec 2025:</strong> Added ability to
+                        invalidate cache after paste deletion. Added code
+                        revision display. Added docker deployment scripts.
+                    </li>
+                    <li>
+                        <strong>Thu 30 Dec 2021:</strong> Deployed back to
+                        personal servers, 20 GB storage allotted.
                     </li>
 
                     <li>
-                        <strong>Tue 21 Dec 2021:</strong> Temporarily deployed to Heroku, fixing servers.
+                        <strong>Tue 21 Dec 2021:</strong> Temporarily deployed
+                        to Heroku, fixing servers.
                     </li>
                     <li>
                         <strong>Sat 19 Jul 2021:</strong> Redesigned webpage.
@@ -156,7 +290,13 @@
                 <h1>Contact Information</h1>
                 <ul>
                     <li>contact[at]prashant.me</li>
-                    <li>Github [<a href="https://github.com/intern0t" title="Github Profile">intern0t</a>]</li>
+                    <li>
+                        Github [<a
+                            href="https://github.com/intern0t"
+                            title="Github Profile"
+                            >intern0t</a
+                        >]
+                    </li>
                     <li>IRC@Libera [Scarecr0w]</li>
                 </ul>
             </section>
